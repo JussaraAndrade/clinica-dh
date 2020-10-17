@@ -1,5 +1,7 @@
 package br.com.clinica.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,10 @@ public class RequisitaReceitaService {
 		return receitaRepository.findAll(); 
 	}
 	
+	@GetMapping("/{id}")
+	public Optional <Receita> ConsultaId(@PathVariable Integer id){
+		return receitaRepository.findById(id);
+	}
 
 	@PostMapping
 	public Receita Inserir(@RequestBody Receita receita) {
