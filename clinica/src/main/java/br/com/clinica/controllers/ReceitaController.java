@@ -1,4 +1,4 @@
-package br.com.clinica.services;
+package br.com.clinica.controllers;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ import br.com.clinica.repositories.ReceitaRepository;
 
 @RestController
 @RequestMapping("receita")
-public class RequisitaReceitaService {
+public class ReceitaController {
 	@Autowired
 	private ReceitaRepository receitaRepository;
 	
