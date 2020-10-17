@@ -1,10 +1,13 @@
 package br.com.clinica.entities;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Paciente {
@@ -21,6 +24,9 @@ public class Paciente {
 	private Double peso;
 	private Double altura;
 	private String cpf;
+	
+	@OneToMany(mappedBy = "paciente")
+	private Set<Consulta> consultas;
 	
 	public Paciente() {}
 
