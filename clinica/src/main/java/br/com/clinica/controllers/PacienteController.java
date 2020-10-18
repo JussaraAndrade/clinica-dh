@@ -18,7 +18,7 @@ import br.com.clinica.repositories.PacienteRepository;
 import br.com.clinica.services.RequisitaConsultaService;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("paciente")
 public class PacienteController {
 
 	@Autowired
@@ -36,8 +36,8 @@ public class PacienteController {
 		return pacienteRepository.findById(id);
 	}
 
-	@PostMapping("/requisita/{nome}")
-	public void requesitaConsulta(@RequestParam String medico, @RequestBody Paciente paciente) {
+	@PostMapping("/requisita/{medico}")
+	public void requesitaConsulta(@PathVariable String medico, @RequestBody Paciente paciente) {
 		System.out.println(medico);
 		requisitaConsulta.addConsulta(paciente, medico);
 	}

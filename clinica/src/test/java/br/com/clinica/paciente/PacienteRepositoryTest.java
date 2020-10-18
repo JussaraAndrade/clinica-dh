@@ -8,8 +8,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.clinica.entities.Consulta;
 import br.com.clinica.entities.Paciente;
+import br.com.clinica.repositories.ConsultaRepository;
 import br.com.clinica.repositories.PacienteRepository;
+import br.com.clinica.services.RequisitaConsultaService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -18,8 +21,8 @@ public class PacienteRepositoryTest {
 		
 	@Autowired
 	PacienteRepository pacienteRepository;
-	//@Autowired
-	//ConsultaRepository consultaRepository;
+	@Autowired
+	ConsultaRepository consultaRepository;
 	
 	@Test
 	public void verificaIdPacienteNull() {
@@ -27,7 +30,7 @@ public class PacienteRepositoryTest {
 	
 		this.pacienteRepository.save(paciente);
 		
-		Paciente pacienteDB = this.pacienteRepository.findOneByNome(paciente.getNome());
+		Paciente pacienteDB = this.pacienteRepository.findOneByCpf(paciente.getCpf());
 		
 		Assertions.assertThat(pacienteDB.getId_paciente()).isNotNull();
 	}
@@ -58,20 +61,22 @@ public class PacienteRepositoryTest {
 		Assertions.assertThat(paciente.getNome()).isEqualTo(pacienteDB.getNome());
 	}
 	
-	/*
+
 	@Test
 	public void verificaConsultaRequesitada() {
 		Paciente paciente = new Paciente("Caique","Av. Kubitschek","1988-07-30", "11 970875459","2020-07-30","caique@example.com", 75.00, 2.00, "48245685789");
 		
-		RequesitaConsultaService requesita = new RequesitaConsultaService();
+		this.pacienteRepository.save(paciente);
 		
-		requesita.addConsulta(paciente, "Dr. Valerio");
+		RequisitaConsultaService requisita = new RequisitaConsultaService();
 		
-		Consulta consultaDB = this.consultaRepository.findOneByPaciente(paciente.getNome());
+		requisita.addConsulta(paciente, "Dr. Valerio");
 		
-		Assertions.assertThat(paciente.getNome()).isEqualTo(consultaDB.getPaciente());
+		Consulta consultaDB = this.consultaRepository.findOneByPaciente(paciente);
+		
+		Assertions.assertThat(paciente.getNome()).isEqualTo(consultaDB.getPaciente().getNome());
 	
-	}*/
+	}
 	
 	
 	
