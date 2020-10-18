@@ -1,65 +1,25 @@
 package br.com.clinica.services;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Bean;
 
-import br.com.clinica.entities.Consulta;
-import br.com.clinica.repositories.ConsultaRepository;
+import br.com.clinica.entities.Paciente;
 
-@RestController
-@RequestMapping("consulta")
 public class RequisitaConsultaService {
 	
 	@Autowired
-	static ConsultaRepository consultaRepository;
+	ConsultaRepository consultaRepository;
 	
-	
-//	public static void addConsulta(Paciente paciente, String medico) {
-//		LocalDateTime now = LocalDateTime.now(); 
-//		
-//		Consulta consulta = new Consulta(now, 129.99f, "Paciente com ebola", medico, paciente.getNome());
-//		
-//		consultaRepository.save(consulta);
-//		
-//		
-//	}
-	
-	@GetMapping
-	public Iterable<Consulta> getConsultas(){
-		return consultaRepository.findAll(); 
-	}
-
-	@PostMapping
-	public Consulta inserirConsulta(@RequestBody Consulta consulta) {
+	@Bean
+	public static void addConsulta(Paciente paciente, String medico) {
+		LocalDateTime now = LocalDateTime.now(); 
+		
+		Consulta consulta = new Consulta(paciente, now, 129.99, "Paciente com ebola", medico);
+		
 		consultaRepository.save(consulta);
-		return consulta;
-	}
-	
-	@DeleteMapping("/{id}")
-	public void deleteConsulta(@PathVariable int id) {
-		consultaRepository.deleteById(id);
-	}
-	
-	@PutMapping("/{id}")
-	public Consulta updateConsulta(@PathVariable int id, @RequestBody Consulta consulta) throws Exception {
-		Consulta consultaDB = consultaRepository.findById(id).orElseThrow(()-> new IllegalAccessException());
 		
-		if(consulta.getMedico() != consultaDB.getMedico()) {
-			consultaDB.setMedico(consulta.getMedico());
-		}
-		if(consulta.getDescricao() != consultaDB.getDescricao()) {
-			consultaDB.setDescricao(consulta.getDescricao());
-		}
-		
-		consultaRepository.save(consultaDB);
-		
-		return consultaDB;
 	}
 }

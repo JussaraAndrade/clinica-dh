@@ -65,7 +65,7 @@ public class PacienteRepositoryTest {
 		
 		RequesitaConsultaService requesita = new RequesitaConsultaService();
 		
-		requesita.addConsulta(paciente.getNome(), "Dr. Valerio");
+		requesita.addConsulta(paciente, "Dr. Valerio");
 		
 		Consulta consultaDB = this.consultaRepository.findOneByPaciente(paciente.getNome());
 		
